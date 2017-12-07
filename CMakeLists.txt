@@ -5,7 +5,9 @@ set(CPP
         ${SRC}/util.cpp
         ${SRC}/util.h
         ${SRC}/image_normalizer.cpp
-        ${SRC}/image_normalizer.h)
+        ${SRC}/image_normalizer.h
+        ${SRC}/image_normalizer_evaluator.cpp
+        ${SRC}/image_normalizer_evaluator.h)
 
 project(${PROJECT_NAME})
 

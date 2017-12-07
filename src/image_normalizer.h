@@ -1,6 +1,7 @@
 #ifndef SIMAGE_IMAGE_NORMALIZER_H
 #define SIMAGE_IMAGE_NORMALIZER_H
 
+#include <functional>
 #include <opencv2/core/mat.hpp>
 
 namespace simage::image_normalizer {
@@ -15,11 +16,10 @@ struct ImageNormalizeParameters {
     static std::function<ImageNormalizeParameters()> get_random_generator();
 };
 
-// Get edges from an image `input`, and put in `output`
-void normalize(const cv::Mat &input, cv::Mat &output, int gaussian_blur_size, int laplacian_filter_size);
+std::ostream& operator<< (std::ostream &stream, const ImageNormalizeParameters &parameters);
 
-// Find optimal parameters for `normalize()`
-void test_normalize_parameters(const std::vector<std::vector<cv::Mat>> image_groups, uint32_t num_iterations);
+// Get edges from an image `input`, and put in `output`
+void normalize(const cv::Mat &input, cv::Mat &output, const ImageNormalizeParameters &parameters);
 
 // Get the pixel-wise difference between two images
 double get_difference_score(const cv::Mat &a, const cv::Mat &b);

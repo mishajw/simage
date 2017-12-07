@@ -1,6 +1,6 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
-#include "image_normalizer.h"
+#include "image_normalizer_evaluator.h"
 
 int main(int argc, char **argv) {
     if (argc < 3 || argc % 2 != 1) {
@@ -22,5 +22,5 @@ int main(int argc, char **argv) {
         image_groups.emplace_back(std::vector<cv::Mat>{image1, image2});
     }
 
-    simage::image_normalizer::test_normalize_parameters(image_groups, 100);
+    simage::image_normalizer::evaluator::test_normalize_parameters(image_groups, 100);
 }
