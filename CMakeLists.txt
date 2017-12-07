@@ -1,6 +1,11 @@
 set(PROJECT_NAME simage)
 set(SRC "src")
-set(CPP ${SRC}/main.cpp)
+set(CPP
+        ${SRC}/main.cpp
+        ${SRC}/util.cpp
+        ${SRC}/util.h
+        ${SRC}/image_normalizer.cpp
+        ${SRC}/image_normalizer.h)
 
 project(${PROJECT_NAME})
 
