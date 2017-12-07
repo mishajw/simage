@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 #include "image_normalizer_evaluator.h"
 #include "image_normalizer.h"
 
@@ -6,19 +7,28 @@
 namespace simage::image_normalizer::evaluator {
 
 // Evaluate the effectiveness of some parameters on image groups
-void evaluate_parameters(std::vector<std::vector<cv::Mat>> image_groups, const ImageNormalizeParameters &parameters);
+double evaluate_parameters(std::vector<std::vector<cv::Mat>> image_groups, const ImageNormalizeParameters &parameters);
 
 void test_normalize_parameters(const std::vector<std::vector<cv::Mat>> image_groups, uint32_t num_iterations) {
     const auto random_generator = ImageNormalizeParameters::get_random_generator();
 
+    double min_cost = std::numeric_limits<double>::max();
+    std::unique_ptr<ImageNormalizeParameters> min_parameters;
+
     for (uint32_t i = 0; i < num_iterations; i++) {
         const auto random_parameters = random_generator();
 
-        evaluate_parameters(image_groups, random_parameters);
+        double cost = evaluate_parameters(image_groups, random_parameters);
+        if (cost < min_cost) {
+            min_cost = cost;
+            min_parameters = std::make_unique<ImageNormalizeParameters>(random_parameters);
+        }
     }
+
+    std::cout << "Found minimum parameters " << *min_parameters << " with cost " << min_cost << std::endl;
 }
 
-void evaluate_parameters(
+double evaluate_parameters(
         std::vector<std::vector<cv::Mat>> image_groups, const ImageNormalizeParameters &parameters) {
     // Create edge images
     std::vector<std::vector<cv::Mat>> edges_groups;
@@ -68,6 +78,8 @@ void evaluate_parameters(
               "Params: " << parameters << "; " <<
               "Intra-group difference: " << intra_group_difference_average << "; " <<
               "Inter-group difference: " << inter_group_difference_average << std::endl;
+
+    return cost;
 }
 
 }

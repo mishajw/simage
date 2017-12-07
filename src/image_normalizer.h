@@ -10,6 +10,9 @@ struct ImageNormalizeParameters {
     ImageNormalizeParameters(const int gaussian_blur_size, const int laplacian_filter_size) :
             gaussian_blur_size(gaussian_blur_size), laplacian_filter_size(laplacian_filter_size) {}
 
+    ImageNormalizeParameters() :
+            gaussian_blur_size(0), laplacian_filter_size(0) {}
+
     const int gaussian_blur_size;
     const int laplacian_filter_size;
 
